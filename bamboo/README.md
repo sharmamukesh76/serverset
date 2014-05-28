@@ -1,6 +1,8 @@
-# Installation
+Installation
+============
 
-## Development environment
+Development environment
+-----------------------
 
 [Vagrant](http://www.vagrantup.com/) is used to create local virtual machine using Oracle [VirtualBox](https://www.virtualbox.org/).
 
@@ -26,7 +28,8 @@ vagrant halt
 
 Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) for more information.
 
-## Production environment
+Production environment
+----------------------
 
 Execute bootstrap.sh:
 
