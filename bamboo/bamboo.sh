@@ -2,7 +2,6 @@
 
 BAMBOO_VERSION=5.5.1
 
-sudo su -
 /usr/sbin/useradd --create-home --home-dir /usr/local/bamboo --shell /bin/bash bamboo
 mkdir -p /opt/bamboo
 chown bamboo: /opt/bamboo

@@ -2,8 +2,6 @@
 
 STASH_VERSION=3.0.1
 
-sudo su -
-
 # Git
 mkdir -p /opt/git
 cd /opt/git
