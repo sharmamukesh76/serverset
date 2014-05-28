@@ -14,7 +14,7 @@ vagrant up
 
 Access the Bamboo instance by going to your web browser and entering the address: [http://localhost:4567/](http://localhost:4567/).
 
-When started for the first time, Bamboo required licence key to be entered.
+When started for the first time, Bamboo requires licence key to be entered.
 Please follow the on-screen instructions.
 
 Recommended installation for development purposes is to use the "Express installation".
@@ -39,7 +39,7 @@ Execute bootstrap.sh:
 
 Access the Bamboo instance by going to your web browser and entering the address: [http://localhost:8085/](http://localhost:8085/).
 
-When started for the first time, Bamboo required licence key to be entered.
+When started for the first time, Bamboo requires licence key to be entered.
 Please follow the on-screen instructions.
 
 Recommended installation for production purposes is to use the "Custom installation".

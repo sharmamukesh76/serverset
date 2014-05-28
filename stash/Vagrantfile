@@ -6,10 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.5"
   config.vm.provision "shell", path: "general.sh"
-  config.vm.provision "shell", path: "bamboo.sh"
-  config.vm.network :forwarded_port, host: 4567, guest: 8085
+  config.vm.provision "shell", path: "stash.sh"
+  config.vm.network :forwarded_port, host: 4568, guest: 7990
   config.vm.provider "virtualbox" do |v|
-    v.name = "bamboo"
+    v.name = "stash"
     v.memory = 1024
   end
 end
