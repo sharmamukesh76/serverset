@@ -6,7 +6,7 @@
 
 To create a virtual machine with CentOS and Bamboo execute following from this directory:
 
-```shell
+```bash
 vagrant up
 ```
 
@@ -20,7 +20,7 @@ Please see the [Running the Setup Wizard](https://confluence.atlassian.com/displ
 
 To stop the virtual machine execute:
 
-```shell
+```bash
 vagrant halt
 ```
 
@@ -30,7 +30,7 @@ Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www
 
 Execute bootstrap.sh:
 
-```shell
+```bash
 ./bootstrap.sh
 ```
 
