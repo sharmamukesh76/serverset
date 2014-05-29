@@ -12,7 +12,7 @@ To create a virtual machine with CentOS and Stash execute following from this di
 vagrant up
 ```
 
-Access the Stash instance by going to your web browser and entering the address: [http://localhost:4568/](http://localhost:4568/).
+Access the Stash instance by going to your web browser and entering the address: [http://localhost:7990/](http://localhost:7990/).
 
 Recommended installation for development purposes is to use the internal database.
 
@@ -31,10 +31,12 @@ Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www
 Production environment
 ----------------------
 
-Execute bootstrap.sh:
+Execute stash.sh:
 
 ```bash
-./bootstrap.sh
+sudo su -
+./general.sh
+./stash.sh
 ```
 
 Access the Stash instance by going to your web browser and entering the address: [http://localhost:7990/](http://localhost:7990/).

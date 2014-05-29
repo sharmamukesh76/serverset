@@ -21,6 +21,7 @@ Different servers can be combined.
 Following example installs both Stash and Bamboo servers.
 
 ```bash
+sudo su -
 /vagrant/sync/stash/stash.sh
 /vagrant/sync/bamboo/bamboo.sh
 ```
@@ -32,5 +33,3 @@ vagrant halt
 ```
 
 Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) for more information.
-
-
