@@ -47,4 +47,15 @@ Please follow the on-screen instructions.
 Recommended installation for production purposes is to use the "Custom installation".
 Please see the [Running the Setup Wizard](https://confluence.atlassian.com/display/BAMBOO/Running+the+Setup+Wizard) guide for detailed instructions.
 
+During the setup, make sure that the connection with the Stash is established.
+
 TODO Continue with installation steps
+
+
+Add-ons
+=======
+
+Following add-ons should be installed:
+XXX
+
+Please see the [Bamboo Add-ons](https://confluence.atlassian.com/display/BAMBOO/Add-ons) page for more detailed instructions.
