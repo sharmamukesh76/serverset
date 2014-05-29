@@ -26,12 +26,12 @@ chown -R stash:stash /data/stash
 sed -i "7i STASH_HOME=\"/data/stash\"" atlassian-stash/bin/setenv.sh
 
 # MySQL Connector
-MYSQL_CONNECOTR_NAME=mysql-connector-java-${MYSQL_CONNECTOR_VERSION}
+MYSQL_CONNECTOR_NAME=mysql-connector-java-${MYSQL_CONNECTOR_VERSION}
 cd /opt/stash/atlassian-stash/lib
-wget http://dev.mysql.com/get/Downloads/Connector-J/${MYSQL_CONNECOTR_NAME}.tar.gz
-tar -xzvf ${MYSQL_CONNECOTR_NAME}.tar.gz
-cp ${MYSQL_CONNECOTR_NAME}/${MYSQL_CONNECOTR_NAME}-bin.jar .
-chown stash:stash ${MYSQL_CONNECOTR_NAME}-bin.jar
+wget http://dev.mysql.com/get/Downloads/Connector-J/${MYSQL_CONNECTOR_NAME}.tar.gz
+tar -xzvf ${MYSQL_CONNECTOR_NAME}.tar.gz
+cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
+chown stash:stash ${MYSQL_CONNECTOR_NAME}-bin.jar
 
 # Start Stash
 cd /opt/stash/atlassian-stash
