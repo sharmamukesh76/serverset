@@ -18,6 +18,9 @@ Check that service is up an running by executing:
 service mysqld status
 ```
 
+Tables are created for stash and bamboo.
+All tables have full privileges given to the user admin.
+
 Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) for more information.
 
 Production environment
@@ -30,8 +33,11 @@ sudo su -
 ./mysql.sh
 ```
 
-Check that service is up an running by executing:
+Check that service is up and running by executing:
 
 ```bash
 service mysqld status
 ```
+
+Tables are created for stash and bamboo.
+All tables have full privileges given to the user admin.
