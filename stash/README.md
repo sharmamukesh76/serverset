@@ -26,7 +26,12 @@ To stop the virtual machine execute:
 vagrant halt
 ```
 
-Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) for more information.
+For more information please consult:
+
+* [Vagrant](http://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/STASH/Installing+Stash+on+Linux+and+Mac)
+* [Connecting Stash to MySQL](https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+MySQL)
 
 Production environment
 ----------------------
@@ -48,3 +53,8 @@ When started for the first time, Stash requires licence key to be entered.
 Please follow the on-screen instructions.
 
 **TODO Continue with installation steps**
+
+For more information please consult:
+
+* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/STASH/Installing+Stash+on+Linux+and+Mac)
+* [Connecting Stash to MySQL](https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+MySQL)

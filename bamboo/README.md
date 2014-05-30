@@ -26,7 +26,12 @@ To stop the virtual machine execute:
 vagrant halt
 ```
 
-Please consult [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) for more information.
+For more information, please consult:
+
+* [Vagrant](http://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/BAMBOO/Installing+Bamboo+on+Linux)
+* [Connecting Bamboo to an external database > MySQL 5.1](https://confluence.atlassian.com/display/BAMBOO/MySQL+5.1)
 
 Production environment
 ----------------------
@@ -49,13 +54,9 @@ Please see the [Running the Setup Wizard](https://confluence.atlassian.com/displ
 
 During the setup, make sure that the connection with the Stash is established.
 
-TODO Continue with installation steps
+**TODO Continue with installation steps**
 
+For more information, please consult:
 
-Add-ons
-=======
-
-Following add-ons should be installed:
-XXX
-
-Please see the [Bamboo Add-ons](https://confluence.atlassian.com/display/BAMBOO/Add-ons) page for more detailed instructions.
+* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/BAMBOO/Installing+Bamboo+on+Linux)
+* [Connecting Bamboo to an external database > MySQL 5.1](https://confluence.atlassian.com/display/BAMBOO/MySQL+5.1)

@@ -2,6 +2,8 @@
 
 MYSQL_VERSION=mysql-community-release-el6-5
 
+/usr/sbin/useradd --create-home --home-dir /usr/local/mysql --shell /bin/bash mysql
+
 # MySQL
 wget http://dev.mysql.com/get/${MYSQL_VERSION}.noarch.rpm
 yum -y localinstall ${MYSQL_VERSION}.noarch.rpm
