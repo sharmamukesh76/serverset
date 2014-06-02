@@ -26,6 +26,8 @@ To stop the virtual machine execute:
 vagrant halt
 ```
 
+Bamboo is installed as a service with start, stop and restart commands.
+
 For more information, please consult:
 
 * [Vagrant](http://www.vagrantup.com/)
@@ -40,6 +42,7 @@ Execute bamboo.sh:
 
 ```bash
 sudo su -
+cp bamboo /etc/init.d/bamboo
 ./general.sh
 ./bamboo.sh
 ```
@@ -55,6 +58,8 @@ Please see the [Running the Setup Wizard](https://confluence.atlassian.com/displ
 During the setup, make sure that the connection with the Stash is established.
 
 **TODO Continue with installation steps**
+
+Bamboo is installed as a service with start, stop and restart commands.
 
 For more information, please consult:
 

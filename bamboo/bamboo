@@ -9,7 +9,7 @@ APP=bamboo
 # Name of the user to run as
 USER=bamboo
 # Location of application's bin directory
-BASE=/opt/bamboo/current
+BASE=/opt/bamboo/atlassian-bamboo
 # Location of Java JDK
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk.x86_64
 

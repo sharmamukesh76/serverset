@@ -12,7 +12,7 @@ cd git-1.9.0
 make prefix=/usr/local all
 make prefix=/usr/local install
 
-# Stash
+# Stash installation
 /usr/sbin/useradd --create-home --home-dir /usr/local/stash --shell /bin/bash stash
 mkdir -p /opt/stash
 chown stash: /opt/stash
@@ -22,8 +22,15 @@ tar -xvf atlassian-stash-${STASH_VERSION}.tar.gz
 chown -R stash:stash atlassian-stash*
 ln -s atlassian-stash-${STASH_VERSION} atlassian-stash
 mkdir -p /data/stash
+chown -R stash:stash /opt/stash/atlassian-stash/
 chown -R stash:stash /data/stash
 sed -i "7i STASH_HOME=\"/data/stash\"" atlassian-stash/bin/setenv.sh
+
+# Stash service
+yum -y install redhat-lsb
+dos2unix /etc/init.d/stash
+chmod \+x /etc/init.d/stash
+/sbin/chkconfig --add stash
 
 # MySQL Connector
 MYSQL_CONNECTOR_NAME=mysql-connector-java-${MYSQL_CONNECTOR_VERSION}

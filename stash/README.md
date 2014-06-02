@@ -26,6 +26,8 @@ To stop the virtual machine execute:
 vagrant halt
 ```
 
+Bamboo is installed as a service with start, stop, restart and status commands.
+
 For more information please consult:
 
 * [Vagrant](http://www.vagrantup.com/)
@@ -53,6 +55,8 @@ When started for the first time, Stash requires licence key to be entered.
 Please follow the on-screen instructions.
 
 **TODO Continue with installation steps**
+
+Bamboo is installed as a service with start, stop, restart and status commands.
 
 For more information please consult:
 

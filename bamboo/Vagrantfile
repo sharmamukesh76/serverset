@@ -5,6 +5,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.5"
+  config.vm.provision "shell", inline: "cp /vagrant/bamboo /etc/init.d/bamboo"
   config.vm.provision "shell", path: "general.sh"
   config.vm.provision "shell", path: "bamboo.sh"
   config.vm.network "private_network", type: "dhcp"
