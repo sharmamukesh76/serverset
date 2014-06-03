@@ -8,7 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: "cp /vagrant/stash /etc/init.d/stash"
   config.vm.provision "shell", path: "general.sh"
   config.vm.provision "shell", path: "stash.sh"
-  config.vm.network "private_network", type: "dhcp"
   config.vm.network :forwarded_port, host: 7990, guest: 7990
   config.vm.provider "virtualbox" do |v|
     v.name = "stash"

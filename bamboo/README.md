@@ -55,9 +55,12 @@ Please follow the on-screen instructions.
 Recommended installation for production purposes is to use the "Custom installation".
 Please see the [Running the Setup Wizard](https://confluence.atlassian.com/display/BAMBOO/Running+the+Setup+Wizard) guide for detailed instructions.
 
-During the setup, make sure that the connection with the Stash is established.
+## Connection with Stash
 
-**TODO Continue with installation steps**
+Make sure that the connection with the Stash is established.
+
+If not configured during the setup, Stash connection can be established through:
+Bamboo administration &gt; Overview &gt; Linked repositories &gt; Add repository
 
 Bamboo is installed as a service with start, stop and restart commands.
 

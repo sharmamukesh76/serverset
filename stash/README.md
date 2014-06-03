@@ -42,6 +42,7 @@ Execute stash.sh:
 
 ```bash
 sudo su -
+cp stash /etc/init.d/stash
 ./general.sh
 ./stash.sh
 ```

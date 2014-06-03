@@ -25,6 +25,7 @@ mkdir -p /data/stash
 chown -R stash:stash /opt/stash/atlassian-stash/
 chown -R stash:stash /data/stash
 sed -i "7i STASH_HOME=\"/data/stash\"" atlassian-stash/bin/setenv.sh
+lokkit --port=7990:tcp --update
 
 # Stash service
 yum -y install redhat-lsb
@@ -41,5 +42,4 @@ cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
 chown stash:stash ${MYSQL_CONNECTOR_NAME}-bin.jar
 
 # Start Stash
-cd /opt/stash/atlassian-stash
-bin/start-stash.sh
+service stash start
