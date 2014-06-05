@@ -25,9 +25,6 @@ For more information please consult:
 
 * [Vagrant](http://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/)
-* [Installing MySQL on Linux Using the MySQL Yum Repository](http://dev.mysql.com/doc/mysql-repo-excerpt/5.6/en/linux-installation-yum-repo.html)
-* [Connecting Bamboo to an external database > MySQL 5.1](https://confluence.atlassian.com/display/BAMBOO/MySQL+5.1)
-* [Connecting Stash to MySQL](https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+MySQL)
 
 
 Production environment
@@ -40,6 +37,10 @@ sudo su -
 ./mysql.sh
 ```
 
+
+General notes
+=============
+
 Check that the service is up and running by executing:
 
 ```bash
@@ -48,6 +49,13 @@ service mysqld status
 
 Tables are created for stash and bamboo.
 All tables have full privileges given to the user admin.
+
+For security purposes, passwords are not set through scripts described in this document.
+To set an password, please execute (replace <USER> and <PASSWORD> with the desired value):
+
+```bash
+mysqladmin -u <USER> password <PASSWORD>
+```
 
 For more information please consult:
 

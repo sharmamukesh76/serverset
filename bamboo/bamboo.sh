@@ -4,6 +4,8 @@ BAMBOO_VERSION=5.5.1
 MYSQL_CONNECTOR_VERSION=5.1.30
 MAVEN3_VERSION=3.2.1
 
+yum -y update
+
 # Bamboo installation
 /usr/sbin/useradd --create-home --home-dir /usr/local/bamboo --shell /bin/bash bamboo
 mkdir -p /opt/bamboo
@@ -11,6 +13,7 @@ chown bamboo: /opt/bamboo
 cd /opt/bamboo/
 wget http://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-${BAMBOO_VERSION}.tar.gz
 tar -xvf atlassian-bamboo-${BAMBOO_VERSION}.tar.gz
+rm -f atlassian-bamboo-${BAMBOO_VERSION}.tar.gz
 ln -s atlassian-bamboo-${BAMBOO_VERSION} atlassian-bamboo
 chown -R bamboo:bamboo atlassian-bamboo
 mkdir -p /data/bamboo
@@ -29,11 +32,13 @@ chmod \+x /etc/init.d/bamboo
 MYSQL_CONNECTOR_NAME=mysql-connector-java-${MYSQL_CONNECTOR_VERSION}
 mkdir -p /opt/bamboo/atlassian-bamboo/WEB-INF/lib
 chown bamboo:bamboo /opt/bamboo/atlassian-bamboo/WEB-INF/lib
-cd /opt/bamboo/atlassian-bamboo/WEB-INF/lib
+cd /opt/bamboo/atlassian-bamboo/lib
 wget http://dev.mysql.com/get/Downloads/Connector-J/${MYSQL_CONNECTOR_NAME}.tar.gz
 tar -xzvf ${MYSQL_CONNECTOR_NAME}.tar.gz
 cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
 chown bamboo:bamboo ${MYSQL_CONNECTOR_NAME}-bin.jar
+rm -rf ${MYSQL_CONNECTOR_NAME}
+rm -rf ${MYSQL_CONNECTOR_NAME}.tar.gz
 
 # Maven
 cd /usr/local

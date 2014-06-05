@@ -14,26 +14,16 @@ vagrant up
 
 Access the Stash instance by going to your web browser and entering the address: [http://localhost:7990/](http://localhost:7990/).
 
-Recommended installation for development purposes is to use the internal database.
-
-When started for the first time, Stash requires licence key to be entered.
-
-Please follow the on-screen instructions.
-
 To stop the virtual machine execute:
 
 ```bash
 vagrant halt
 ```
 
-Bamboo is installed as a service with start, stop, restart and status commands.
-
 For more information please consult:
 
 * [Vagrant](http://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/)
-* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/STASH/Installing+Stash+on+Linux+and+Mac)
-* [Connecting Stash to MySQL](https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+MySQL)
 
 Production environment
 ----------------------
@@ -47,7 +37,11 @@ cp stash /etc/init.d/stash
 ./stash.sh
 ```
 
-Access the Stash instance by going to your web browser and entering the address: [http://localhost:7990/](http://localhost:7990/).
+Access the Stash instance by going to your web browser and entering the address: [http://192.168.0.40:7990/](http://192.168.0.40:7990/).
+
+
+General information
+-------------------
 
 Recommended installation for production purposes is to use the external database.
 
@@ -55,11 +49,13 @@ When started for the first time, Stash requires licence key to be entered.
 
 Please follow the on-screen instructions.
 
-**TODO Continue with installation steps**
+Stash is installed as a service with start, stop, restart and status commands.
 
-Bamboo is installed as a service with start, stop, restart and status commands.
+In case the database was not setup during the initial installation, it can be migrated later on using the following steps:
+
+Administration &gt; Database &gt; Migrate database. Follow the on-screen instructions.
 
 For more information please consult:
 
-* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/STASH/Installing+Stash+on+Linux+and+Mac)
+* [Installing Stash on Linux](https://confluence.atlassian.com/display/STASH/Installing+Stash+on+Linux+and+Mac)
 * [Connecting Stash to MySQL](https://confluence.atlassian.com/display/STASH/Connecting+Stash+to+MySQL)

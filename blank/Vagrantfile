@@ -7,8 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.5"
   config.vm.provision "shell", path: "general.sh"
   config.vm.synced_folder "../", "/vagrant/sync"
-#  config.vm.network :forwarded_port, host: 4567, guest: 8085
-#  config.vm.network :forwarded_port, host: 4568, guest: 7990
+  config.vm.network :forwarded_port, host: 8080, guest: 8080
   config.vm.network :forwarded_port, host: 8085, guest: 8085
   config.vm.network :forwarded_port, host: 7990, guest: 7990
   config.vm.provider "virtualbox" do |v|

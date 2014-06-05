@@ -3,6 +3,9 @@
 STASH_VERSION=3.0.1
 MYSQL_CONNECTOR_VERSION=5.1.30
 
+yum -y update
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix
+
 # Git
 mkdir -p /opt/git
 cd /opt/git
@@ -40,6 +43,8 @@ wget http://dev.mysql.com/get/Downloads/Connector-J/${MYSQL_CONNECTOR_NAME}.tar.
 tar -xzvf ${MYSQL_CONNECTOR_NAME}.tar.gz
 cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
 chown stash:stash ${MYSQL_CONNECTOR_NAME}-bin.jar
+rm -f ${MYSQL_CONNECTOR_NAME}.tar.gz
+rm -rf ${MYSQL_CONNECTOR_NAME}
 
 # Start Stash
 service stash start

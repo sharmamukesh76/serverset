@@ -14,9 +14,6 @@ vagrant up
 
 Access the Bamboo instance by going to your web browser and entering the address: [http://localhost:8085/](http://localhost:8085/).
 
-When started for the first time, Bamboo requires licence key to be entered.
-Please follow the on-screen instructions.
-
 Recommended installation for development purposes is to use the "Express installation".
 Please see the [Running the Setup Wizard](https://confluence.atlassian.com/display/BAMBOO/Running+the+Setup+Wizard) guide for detailed instructions.
 
@@ -26,14 +23,11 @@ To stop the virtual machine execute:
 vagrant halt
 ```
 
-Bamboo is installed as a service with start, stop and restart commands.
-
 For more information, please consult:
 
 * [Vagrant](http://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/)
-* [Installing Bamboo on Linux](https://confluence.atlassian.com/display/BAMBOO/Installing+Bamboo+on+Linux)
-* [Connecting Bamboo to an external database > MySQL 5.1](https://confluence.atlassian.com/display/BAMBOO/MySQL+5.1)
+
 
 Production environment
 ----------------------
@@ -47,20 +41,15 @@ cp bamboo /etc/init.d/bamboo
 ./bamboo.sh
 ```
 
-Access the Bamboo instance by going to your web browser and entering the address: [http://localhost:8085/](http://localhost:8085/).
-
-When started for the first time, Bamboo requires licence key to be entered.
-Please follow the on-screen instructions.
-
 Recommended installation for production purposes is to use the "Custom installation".
 Please see the [Running the Setup Wizard](https://confluence.atlassian.com/display/BAMBOO/Running+the+Setup+Wizard) guide for detailed instructions.
 
-## Connection with Stash
 
-Make sure that the connection with the Stash is established.
+General information
+-------------------
 
-If not configured during the setup, Stash connection can be established through:
-Bamboo administration &gt; Overview &gt; Linked repositories &gt; Add repository
+When started for the first time, Bamboo requires licence key to be entered.
+Please follow the on-screen instructions.
 
 Bamboo is installed as a service with start, stop and restart commands.
 
