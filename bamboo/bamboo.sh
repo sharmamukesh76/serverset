@@ -3,6 +3,9 @@
 BAMBOO_VERSION=5.5.1
 MYSQL_CONNECTOR_VERSION=5.1.30
 MAVEN3_VERSION=3.2.1
+SONAR_RUNNER_VERSION=2.4
+SONAR_IP=192.168.0.43
+SONAR_DB_IP=192.168.0.42
 
 yum -y update
 
@@ -49,6 +52,20 @@ rm -f apache-maven-${MAVEN3_VERSION}-bin.tar.gz
 echo "export M2_HOME=/usr/local/apache-maven
 export M2=\$M2_HOME/bin
 export PATH=\$M2:$PATH" > /etc/profile.d/maven.sh
+
+# Sonar runner
+cd /opt
+wget http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/${SONAR_RUNNER_VERSION}/sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
+unzip sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
+ln -s sonar-runner-${SONAR_RUNNER_VERSION} sonar-runner
+sed -i 's/#sonar.host.url=http:\/\/localhost:9000/sonar.host.url=http:\/\/'${SONAR_IP}':9000/g' /opt/sonar-runner/conf/sonar-runner.properties
+sed -i 's/#sonar.jdbc.url=jdbc:mysql:\/\/localhost:3306\/sonar?useUnicode=true\&amp\;characterEncoding=utf8/sonar.jdbc.url=jdbc:mysql:\/\/'${SONAR_DB_IP}':3306\/sonar?useUnicode=true\&amp\;characterEncoding=utf8/g' /opt/sonar-runner/conf/sonar-runner.properties
+sed -i 's/#sonar.jdbc.username=sonar/sonar.jdbc.username=sonarqube/g' /opt/sonar-runner/conf/sonar-runner.properties
+sed -i 's/#sonar.jdbc.password=sonar/sonar.jdbc.password=sonarqube/g' /opt/sonar-runner/conf/sonar-runner.properties
+echo "export SONAR_RUNNER_HOME=/opt/sonar-runner
+export PATH=\$SONAR_RUNNER_HOME/bin:$PATH" > /etc/profile.d/sonar-runner.sh
+rm sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
+
 
 # Start Bamboo
 service bamboo start

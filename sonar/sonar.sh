@@ -19,7 +19,7 @@ sed -i 's/#sonar.jdbc.url=jdbc:mysql:\/\/localhost:3306\/sonar?useUnicode=true\&
 sed -i 's/#wrapper.java.additional.7=-server/wrapper.java.additional.7=-server/g' sonarqube/conf/wrapper.conf
 sed -i 's/wrapper.java.command=java/wrapper.java.command=\/usr\/lib\/jvm\/java-1.7.0-openjdk.x86_64\/bin\/java/g' sonarqube/conf/wrapper.conf
 rm -f sonarqube-${SONAR_VERSION}.zip
-chown -R sonarqube:sonarqube /opt/sonarqube
+chown -R sonarqube:sonarqube /opt/sonarqube-${SONAR_VERSION}
 lokkit --port=9000:tcp --update
 
 # Start Sonar

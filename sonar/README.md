@@ -51,8 +51,9 @@ Sonar can be started and stopped using:
 
 Default System administrator credentials are admin/admin.
 
-To integrate with Sonar, 
+To integrate with Sonar, download the plugin from [https://marketplace.atlassian.com/plugins/com.marvelution.bamboo.plugins.sonar.tasks](https://marketplace.atlassian.com/plugins/com.marvelution.bamboo.plugins.sonar.tasks)
+and add it to the Bamboo instance (Administration &gt; Manage add-ons &gt; Upload add-on).
 
 For more information please consult:
 
-* [SonarQube: Installing](http://docs.codehaus.org/display/SONAR/Installing)
+* [SonarQube: Installation](http://docs.codehaus.org/display/SONAR/Installing)
