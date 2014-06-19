@@ -8,11 +8,14 @@ yum -y install mysql-server mysql
 chkconfig mysqld on
 service mysqld start
 
+lokkit --port=3306:tcp --update
+
 # DBs
 mysql -e "CREATE user 'root';"
 mysql -e "CREATE user 'alm';"
 mysql -e "CREATE DATABASE jira CHARACTER SET utf8 COLLATE utf8_bin;"
 mysql -e "GRANT ALL PRIVILEGES ON jira.* TO 'alm'@'%';"
+mysql -e "GRANT ALL PRIVILEGES ON jira.* TO 'alm'@'%' IDENTIFIED BY 'mdp@2014';"
 mysql -e "GRANT ALL PRIVILEGES ON jira.* TO 'alm'@'localhost';"
 mysql -e "GRANT ALL PRIVILEGES ON jira.* TO 'alm'@'localhost' IDENTIFIED BY 'mdp@2014';"
 mysql -e "GRANT ALL PRIVILEGES ON jira.* TO 'root'@'%';"
