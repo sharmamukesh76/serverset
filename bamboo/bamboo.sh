@@ -3,6 +3,7 @@
 BAMBOO_VERSION=5.5.1
 MYSQL_CONNECTOR_VERSION=5.1.30
 MAVEN3_VERSION=3.2.1
+GRADLE_VERSION=1.12
 SONAR_RUNNER_VERSION=2.4
 SONAR_IP=192.168.0.43
 SONAR_DB_IP=192.168.0.42
@@ -42,6 +43,15 @@ cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
 chown bamboo:bamboo ${MYSQL_CONNECTOR_NAME}-bin.jar
 rm -rf ${MYSQL_CONNECTOR_NAME}
 rm -rf ${MYSQL_CONNECTOR_NAME}.tar.gz
+
+#Gradle
+cd /opt
+wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip
+unzip gradle-${GRADLE_VERSION}-all.zip
+ln -s gradle-${GRADLE_VERSION} gradle
+echo "export GRADLE_HOME=/opt/gradle/
+export PATH=\$GRADLE_HOME/bin:$PATH" > /etc/profile.d/gradle.sh
+rm -rf gradle-${GRADLE_VERSION}-all.zip
 
 # Maven
 cd /usr/local
