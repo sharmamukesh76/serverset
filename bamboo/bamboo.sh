@@ -49,8 +49,8 @@ cd /opt
 wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip
 unzip gradle-${GRADLE_VERSION}-all.zip
 ln -s gradle-${GRADLE_VERSION} gradle
-echo "export GRADLE_HOME=/opt/gradle/
-export PATH=\$GRADLE_HOME/bin:$PATH" > /etc/profile.d/gradle.sh
+echo "export GRADLE_HOME=/opt/gradle
+export PATH=\$GRADLE_HOME/bin:\$PATH" > /etc/profile.d/gradle.sh
 rm -rf gradle-${GRADLE_VERSION}-all.zip
 
 # Maven
@@ -61,7 +61,7 @@ ln -s apache-maven-${MAVEN3_VERSION} apache-maven
 rm -f apache-maven-${MAVEN3_VERSION}-bin.tar.gz
 echo "export M2_HOME=/usr/local/apache-maven
 export M2=\$M2_HOME/bin
-export PATH=\$M2:$PATH" > /etc/profile.d/maven.sh
+export PATH=\$M2:\$PATH" > /etc/profile.d/maven.sh
 
 # Sonar runner
 cd /opt
@@ -73,7 +73,7 @@ sed -i 's/#sonar.jdbc.url=jdbc:mysql:\/\/localhost:3306\/sonar?useUnicode=true\&
 sed -i 's/#sonar.jdbc.username=sonar/sonar.jdbc.username=sonarqube/g' /opt/sonar-runner/conf/sonar-runner.properties
 sed -i 's/#sonar.jdbc.password=sonar/sonar.jdbc.password=sonarqube/g' /opt/sonar-runner/conf/sonar-runner.properties
 echo "export SONAR_RUNNER_HOME=/opt/sonar-runner
-export PATH=\$SONAR_RUNNER_HOME/bin:$PATH" > /etc/profile.d/sonar-runner.sh
+export PATH=\$SONAR_RUNNER_HOME/bin:\$PATH" > /etc/profile.d/sonar-runner.sh
 rm sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
 
 
