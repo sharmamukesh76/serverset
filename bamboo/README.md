@@ -39,6 +39,7 @@ sudo su -
 cp bamboo /etc/init.d/bamboo
 ./general.sh
 ./bamboo.sh
+cp settings.xml /usr/local/apache-maven/conf/
 ```
 
 Recommended installation for production purposes is to use the "Custom installation".
