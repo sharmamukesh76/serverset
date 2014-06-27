@@ -40,6 +40,8 @@ cp bamboo /etc/init.d/bamboo
 ./general.sh
 ./bamboo.sh
 cp settings.xml /usr/local/apache-maven/conf/
+cp deploy_nexus.sh /usr/local/apache-maven/bin
+chmod 744 /usr/local/apache-maven/bin/deploy_nexus.sh
 ```
 
 Recommended installation for production purposes is to use the "Custom installation".
