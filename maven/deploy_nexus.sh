@@ -2,12 +2,19 @@
 
 rm -rf pom.xml
 clear
+
 GROUP='es.mutuadepropietarios'
 ARTIFACT='sisnet-libs'
 ARTIFACT_CHILD='sisnet-libs-child'
-VERSION='0.1-SNAPSHOT'
 REPO_ID='snapshots'
-REPO_URL='http://192.168.0.41:8081/nexus/content/repositories/snapshots/'
+REPO_URL='http://192.168.0.41:8081/nexus/content/repositories/snapshots'
+VERSION=$1'-SNAPSHOT'
+
+if [ "$2" == "releases" ]; then
+	VERSION=$1
+	REPO_ID='releases'
+	REPO_URL='http://192.168.0.41:8081/nexus/content/repositories/releases'
+fi
 
 echo '<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">' > parent.xml
 

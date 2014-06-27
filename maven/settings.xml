@@ -13,7 +13,12 @@
 			<id>snapshots</id>
 			<username>deployment</username>
 			<password>cinexus@2014</password>
-		</server>	
+		</server>
+		<server>
+			<id>releases</id>
+			<username>deployment</username>
+			<password>cinexus@2014</password>
+		</server>
 	</servers>
 
 	<profiles>
@@ -32,6 +37,16 @@
 					<url>http://192.168.0.41:8081/nexus/content/repositories/snapshots/</url>
 					<snapshots>
 						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>releases</id>
+					<url>http://192.168.0.41:8081/nexus/content/repositories/releases/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
 					</snapshots>
 				</repository>
 
