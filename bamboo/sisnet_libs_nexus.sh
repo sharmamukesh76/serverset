@@ -4,14 +4,14 @@ rm -rf pom.xml
 clear
 
 GROUP='es.mutuadepropietarios'
-ARTIFACT='sisnet-libs'
-ARTIFACT_CHILD='sisnet-libs-child'
+ARTIFACT=$1'-libs'
+ARTIFACT_CHILD=$1'-libs-child'
 REPO_ID='snapshots'
 REPO_URL='http://192.168.0.41:8081/nexus/content/repositories/snapshots'
-VERSION=$1'-SNAPSHOT'
+VERSION=$2'-SNAPSHOT'
 
-if [ "$2" == "releases" ]; then
-	VERSION=$1
+if [ "$3" == "releases" ]; then
+	VERSION=$2
 	REPO_ID='releases'
 	REPO_URL='http://192.168.0.41:8081/nexus/content/repositories/releases'
 fi

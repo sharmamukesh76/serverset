@@ -40,10 +40,10 @@ cp bamboo /etc/init.d/bamboo
 ./general.sh
 ./bamboo.sh
 cp settings.xml /usr/local/apache-maven/conf/
-cp deploy_nexus.sh /usr/local/apache-maven/bin
-dos2unix /usr/local/apache-maven/bin/deploy_nexus.sh
-chgrp admin /usr/local/apache-maven/bin/deploy_nexus.sh
-chmod 755 /usr/local/apache-maven/bin/deploy_nexus.sh
+cp sisnet_libs_nexus.sh /usr/local/apache-maven/bin
+dos2unix /usr/local/apache-maven/bin/sisnet_libs_nexus.sh
+chgrp admin /usr/local/apache-maven/bin/sisnet_libs_nexus.sh
+chmod 755 /usr/local/apache-maven/bin/sisnet_libs_nexus.sh
 ```
 
 Recommended installation for production purposes is to use the "Custom installation".
