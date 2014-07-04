@@ -29,6 +29,7 @@ chown -R stash:stash /opt/stash/atlassian-stash/
 chown -R stash:stash /data/stash
 sed -i "7i STASH_HOME=\"/data/stash\"" atlassian-stash/bin/setenv.sh
 lokkit --port=7990:tcp --update
+lokkit --port=7999:tcp --update
 
 # Stash service
 yum -y install redhat-lsb
