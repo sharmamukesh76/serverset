@@ -11,6 +11,9 @@ SONAR_DB_IP=192.168.0.42
 yum -y update
 yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix
 
+# SVN
+yum -y install svn
+
 # Git
 mkdir -p /opt/git
 cd /opt/git
