@@ -9,6 +9,16 @@ SONAR_IP=192.168.0.43
 SONAR_DB_IP=192.168.0.42
 
 yum -y update
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix
+
+# Git
+mkdir -p /opt/git
+cd /opt/git
+wget https://git-core.googlecode.com/files/git-1.9.0.tar.gz
+tar -xzvf git-1.9.0.tar.gz
+cd git-1.9.0
+make prefix=/usr/local all
+make prefix=/usr/local install
 
 # Bamboo installation
 /usr/sbin/useradd --create-home --home-dir /usr/local/bamboo --shell /bin/bash bamboo
