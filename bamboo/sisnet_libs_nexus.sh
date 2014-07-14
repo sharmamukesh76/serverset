@@ -21,11 +21,13 @@ echo '<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w
 echo '<modelVersion>4.0.0</modelVersion><groupId>'$GROUP'</groupId><artifactId>'$ARTIFACT'</artifactId><version>'$VERSION'</version><packaging>pom</packaging><dependencies>' >> parent.xml
 
 for x in `ls *.jar`; do
-        /usr/local/apache-maven/bin/mvn deploy:deploy-file -DgeneratePom=false -DrepositoryId=$REPO_ID -Durl=$REPO_URL -DgroupId=$GROUP -DartifactId=$ARTIFACT_CHILD -Dversion=$VERSION -Dpackaging=jar -Dfile=$x -Dclassifier=${x%%.jar}
-        echo '<dependency><groupId>'$GROUP'</groupId><artifactId>'$ARTIFACT_CHILD'</artifactId><version>'$VERSION'</version><classifier>'${x%%.jar}'</classifier></dependency>' >> parent.xml
+        CLASSIFIER="$(echo $x | sed "s/.jar//g" | tr '.' '#' | sed "s/#//g")"
+        /usr/local/apache-maven/bin/mvn deploy:deploy-file -DgeneratePom=false -DrepositoryId=$REPO_ID -Durl=$REPO_URL -DgroupId=$GROUP -DartifactId=$ARTIFACT_CHILD -Dversion=$VERSION -Dpackaging=jar -Dfile=$x -Dclassifier=$CLASSIFIER
+        echo '<dependency><groupId>'$GROUP'</groupId><artifactId>'$ARTIFACT_CHILD'</artifactId><version>'$VERSION'</version><classifier>'$CLASSIFIER'</classifier><type>jar</type></dependency>' >> parent.xml
 done
 
 echo '</dependencies></project>' >> parent.xml
 mv parent.xml pom.xml
 
 /usr/local/apache-maven/bin/mvn deploy:deploy-file -DgeneratePom=true -DrepositoryId=$REPO_ID -Durl=$REPO_URL -DpomFile=pom.xml -Dfile=pom.xml
+
