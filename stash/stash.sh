@@ -4,7 +4,7 @@ STASH_VERSION=3.0.1
 MYSQL_CONNECTOR_VERSION=5.1.30
 
 yum -y update
-yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix httpd
 
 # Git
 mkdir -p /opt/git
@@ -30,6 +30,7 @@ chown -R stash:stash /data/stash
 sed -i "7i STASH_HOME=\"/data/stash\"" atlassian-stash/bin/setenv.sh
 lokkit --port=7990:tcp --update
 lokkit --port=7999:tcp --update
+lokkit --port=80:tcp --update
 
 # Stash service
 yum -y install redhat-lsb
@@ -46,6 +47,18 @@ cp ${MYSQL_CONNECTOR_NAME}/${MYSQL_CONNECTOR_NAME}-bin.jar .
 chown stash:stash ${MYSQL_CONNECTOR_NAME}-bin.jar
 rm -f ${MYSQL_CONNECTOR_NAME}.tar.gz
 rm -rf ${MYSQL_CONNECTOR_NAME}
+
+#HTTP Configuration
+service httpd restart
+/usr/sbin/setsebool httpd_can_network_connect true
+cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+echo '<VirtualHost *:80>
+  ServerName stash.mdp.es
+  ProxyPass / http://stash.mdp.es:7990/ retry=0
+  ProxyPassReverse / http://stash.mdp.es:7990/
+  ErrorLog logs/stash.log
+</VirtualHost>' >> /etc/httpd/conf/httpd.conf
+service httpd restart
 
 # Start Stash
 service stash start
