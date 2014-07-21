@@ -22,5 +22,31 @@ rm -f sonarqube-${SONAR_VERSION}.zip
 chown -R sonarqube:sonarqube /opt/sonarqube-${SONAR_VERSION}
 lokkit --port=9000:tcp --update
 
+echo '
+#!/bin/sh
+#
+# rc file for SonarQube
+#
+# chkconfig: 345 96 10
+# description: SonarQube system (www.sonarsource.org)
+#
+### BEGIN INIT INFO
+# Provides: sonar
+# Required-Start: $network
+# Required-Stop: $network
+# Default-Start: 3 4 5
+# Default-Stop: 0 1 2 6
+# Short-Description: SonarQube system (www.sonarsource.org)
+# Description: SonarQube system (www.sonarsource.org)
+### END INIT INFO
+
+/usr/bin/sonar $*' > /etc/init.d/sonar
+
+export SONAR_HOME=/opt/sonarqube
+ln -s $SONAR_HOME/bin/linux-x86-64/sonar.sh /usr/bin/sonar
+chmod 755 /etc/init.d/sonar
+/sbin/chkconfig --add sonar
+/sbin/chkconfig --level 2345 sonar on
+
 # Start Sonar
-/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+service sonar start

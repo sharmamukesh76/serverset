@@ -2,6 +2,9 @@
 
 STASH_VERSION=3.0.1
 MYSQL_CONNECTOR_VERSION=5.1.30
+IP=192.168.0.40
+URL_APP='http://localhost:7990/'
+SERVER_NAME='stash.mdp.es'
 
 yum -y update
 yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix httpd
@@ -50,15 +53,21 @@ rm -rf ${MYSQL_CONNECTOR_NAME}
 
 #HTTP Configuration
 service httpd restart
-/usr/sbin/setsebool httpd_can_network_connect true
+/usr/sbin/setsebool -P httpd_can_network_connect true
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
-echo '<VirtualHost *:80>
-  ServerName stash.mdp.es
-  ProxyPass / http://stash.mdp.es:7990/ retry=0
-  ProxyPassReverse / http://stash.mdp.es:7990/
-  ErrorLog logs/stash.log
+echo '' >> /etc/httpd/conf/httpd.conf
+echo 'ProxyRequests Off' >> /etc/httpd/conf/httpd.conf
+echo 'ProxyPreserveHost On' >> /etc/httpd/conf/httpd.conf
+echo 'NameVirtualHost '${IP} >> /etc/httpd/conf/httpd.conf
+echo '<VirtualHost '${IP}'>
+  ServerName '${SERVER_NAME}'
+  ProxyPass / '${URL_APP}' retry=0
+  ProxyPassReverse / '${URL_APP}'
+  ErrorLog logs/'${SERVER_NAME}'.log
 </VirtualHost>' >> /etc/httpd/conf/httpd.conf
 service httpd restart
+/sbin/chkconfig --add httpd
+/sbin/chkconfig --level 2345 httpd on
 
 # Start Stash
 service stash start

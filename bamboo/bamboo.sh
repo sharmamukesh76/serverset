@@ -7,9 +7,13 @@ GRADLE_VERSION=1.12
 SONAR_RUNNER_VERSION=2.4
 SONAR_IP=192.168.0.43
 SONAR_DB_IP=192.168.0.42
+SERVER_NAME_BAMBOO='bamboo.mdp.es'
+URL_APP_BAMBOO='http://localhost:8085/'
+SERVER_NAME_SONAR='sonarqube.mdp.es'
+URL_APP_SONAR='http://localhost:9000/'
 
 yum -y update
-yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel gcc dos2unix httpd
 
 # SVN
 yum -y install svn
@@ -39,6 +43,8 @@ chown -R bamboo:bamboo /opt/bamboo/atlassian-bamboo/
 chown -R bamboo:bamboo /data/bamboo
 # echo "-Datlassian.plugins.enable.wait=300" >> atlassian-bamboo/bin/setenv.sh
 lokkit --port=8085:tcp --update
+lokkit --port=9000:tcp --update
+lokkit --port=80:tcp --update
 
 # Bamboo service
 dos2unix /etc/init.d/bamboo
@@ -89,6 +95,29 @@ echo "export SONAR_RUNNER_HOME=/opt/sonar-runner
 export PATH=\$SONAR_RUNNER_HOME/bin:\$PATH" > /etc/profile.d/sonar-runner.sh
 rm sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
 
+#HTTP Configuration
+service httpd restart
+/usr/sbin/setsebool -P httpd_can_network_connect true
+cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+echo '' >> /etc/httpd/conf/httpd.conf
+echo 'ProxyRequests Off' >> /etc/httpd/conf/httpd.conf
+echo 'ProxyPreserveHost On' >> /etc/httpd/conf/httpd.conf
+echo 'NameVirtualHost '${SONAR_IP} >> /etc/httpd/conf/httpd.conf
+echo '<VirtualHost '${SONAR_IP}'>
+  ServerName '${SERVER_NAME_BAMBOO}'
+  ProxyPass / '${URL_APP_BAMBOO}' retry=0
+  ProxyPassReverse / '${URL_APP_BAMBOO}'
+  ErrorLog logs/'${SERVER_NAME_BAMBOO}'.log
+</VirtualHost>' >> /etc/httpd/conf/httpd.conf
+echo '<VirtualHost '${SONAR_IP}'>
+  ServerName '${SERVER_NAME_SONAR}'
+  ProxyPass / '${URL_APP_SONAR}' retry=0
+  ProxyPassReverse / '${URL_APP_SONAR}'
+  ErrorLog logs/'${SERVER_NAME_SONAR}'.log
+</VirtualHost>' >> /etc/httpd/conf/httpd.conf
+/sbin/chkconfig --add httpd
+/sbin/chkconfig --level 2345 httpd on
+service httpd restart
 
 # Start Bamboo
 service bamboo start
