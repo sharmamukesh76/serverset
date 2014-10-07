@@ -95,7 +95,7 @@ echo "export SONAR_RUNNER_HOME=/opt/sonar-runner
 export PATH=\$SONAR_RUNNER_HOME/bin:\$PATH" > /etc/profile.d/sonar-runner.sh
 rm sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
 
-#HTTP Configuration
+# HTTP Configuration
 service httpd restart
 /usr/sbin/setsebool -P httpd_can_network_connect true
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig

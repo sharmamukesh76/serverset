@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "chef/centos-6.5"
+  config.vm.provision "shell", path: "general.sh"
+  config.vm.provision "shell", path: "nagios.sh"
+  config.vm.network :forwarded_port, host: 80, guest: 80
+  config.vm.network :forwarded_port, host: 5667, guest: 5667
+  config.vm.provider "virtualbox" do |v|
+    v.name = "nagios"
+    v.memory = 1024
+  end
+end

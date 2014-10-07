@@ -15,6 +15,7 @@ mkdir conf
 cp /vagrant/logstash-simple.conf conf/.
 cp /vagrant/logstash-apache.conf conf/.
 cp /vagrant/logstash-syslog.conf conf/.
+cp /vagrant/logstash-nagios.conf conf/.
 cp /vagrant/access_log /tmp/.
 
 # elasticsearch

@@ -60,3 +60,16 @@ telnet localhost 5000
 ```
 
 To see the dashboard with data from elasticsearch using Kibana open [http://127.0.0.1:8080/kibana](http://127.0.0.1:8080/kibana).
+
+Output STDIN to Nagios and STDOUT:
+
+```bash
+cd /opt/logstash
+bin/logstash -f conf/logstash-nagios.conf
+curl 'http://localhost:9200/_search?pretty'
+```
+
+TODO
+----
+
+* Include nsca configuration into scripts
