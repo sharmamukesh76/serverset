@@ -90,3 +90,10 @@ More info:
 
 * [Using-and-Configuring-NSCA-With-Nagios-XI.pdf](http://assets.nagios.com/downloads/nagiosxi/docs/Using-and-Configuring-NSCA-With-Nagios-XI.pdf)
 * [NSCA_Setup.pdf](http://nagios.sourceforge.net/download/contrib/documentation/misc/NSCA_Setup.pdf)
+
+TODO
+----
+
+* Log4J
+** Add output to ElasticSearch
+** Add input from File
