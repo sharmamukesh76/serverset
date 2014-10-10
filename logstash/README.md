@@ -69,7 +69,24 @@ bin/logstash -f conf/logstash-nagios.conf
 curl 'http://localhost:9200/_search?pretty'
 ```
 
-TODO
+Output STDIN to STDOUT:
+
+```bash
+cd /opt/logstash
+bin/logstash -f conf/logstash-log4j.conf
+```
+
+NSCA
 ----
 
-* Include nsca configuration into scripts
+To try NSCA:
+
+```bash
+cd /opt/nsca
+sudo ./bin/send_nsca ${NAGIOS_HOST} -c config/send_nsca.cfg < messages/ok
+```
+
+More info:
+
+* [Using-and-Configuring-NSCA-With-Nagios-XI.pdf](http://assets.nagios.com/downloads/nagiosxi/docs/Using-and-Configuring-NSCA-With-Nagios-XI.pdf)
+* [NSCA_Setup.pdf](http://nagios.sourceforge.net/download/contrib/documentation/misc/NSCA_Setup.pdf)

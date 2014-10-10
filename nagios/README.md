@@ -30,9 +30,9 @@ Testing
 
 ```bash
 cd /opt/nsca
-./bin/send_nsca localhost -c config/send_nsca.cfg < messages/ok
-./bin/send_nsca localhost -c config/send_nsca.cfg < messages/warning
-./bin/send_nsca localhost -c config/send_nsca.cfg < messages/critical
+sudo ./bin/send_nsca localhost -c config/send_nsca.cfg < messages/ok
+sudo ./bin/send_nsca localhost -c config/send_nsca.cfg < messages/warning
+sudo ./bin/send_nsca localhost -c config/send_nsca.cfg < messages/critical
 ```
 
 TODO
