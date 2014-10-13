@@ -78,14 +78,14 @@ cd /opt/nsca
 sudo ./bin/send_nsca ${NAGIOS_HOST} -c config/send_nsca.cfg < messages/ok
 ```
 
-Output STDIN to NSCA and STDOUT:
+Output STDIN and Log4J logs to NSCA, ElasticSearch and STDOUT:
 
 ```bash
 cd /opt/logstash
 bin/logstash -f conf/logstash-log4j.conf
 ```
 
-Add entries to /tmp/log4j.log or paste them to STDIN.
+To generate LogStash events, add entries to /tmp/log4j.log or paste them to STDIN.
 
 To see the results in Nagios XI, open [http://localhost/nagiosxi/](http://localhost/nagiosxi/).
 
