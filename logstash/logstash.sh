@@ -21,6 +21,7 @@ sudo cp /vagrant/logstash-nagios.conf conf/.
 sudo cp /vagrant/logstash-log4j.conf conf/.
 sudo cp -f /vagrant/grok-patterns patterns/.
 sudo cp /vagrant/access_log /tmp/.
+sudo cp /vagrant/log4j.log /tmp/.
 
 # NSCA
 cd /opt
@@ -56,9 +57,10 @@ curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/${ELASTIC
 sudo tar -zxvf $ELASTIC_SEARCH.tar.gz
 sudo rm -f ${ELASTIC_SEARCH}.tar.gz
 sudo ln -s $ELASTIC_SEARCH elasticsearch
-cd elasticsearch
+cd /opt/elasticsearch
 sudo bin/plugin -install lmenezes/elasticsearch-kopf
 sudo mkdir -p /opt/elasticsearch/logs
+sudo chmod 777 -R logs
 sudo nohup ./bin/elasticsearch > logs/elasticsearch.log 2>&1 &
 
 # Kibana

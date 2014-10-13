@@ -10,6 +10,7 @@ Virtual machine contains following:
 * CentOS
 * [LogStash](http://logstash.net/)
 * [elastisearch](http://www.elasticsearch.org/overview/elasticsearch/) with [kopf plugin](https://github.com/lmenezes/elasticsearch-kopf)
+* [Nagios XI](http://www.nagios.com/products/nagiosxi)
 
 To create the virtual machine execute following from this directory:
 
@@ -19,8 +20,8 @@ vagrant up
 
 Vagrant will output the IP and port that can be used to access the machine (PUTTY?). By default the address is 127.0.0.1:2222.
 
-Testing
--------
+STDIN to STDOUT
+---------------
 
 Output STDIN to elastisearch and STDOUT:
 
@@ -38,12 +39,18 @@ To delete elastisearch logstash data:
 curl -XDELETE 'http://localhost:9200/logstash-*'
 ```
 
+Apache logs to STDOUT
+---------------------
+
 Output contents of a log file using filters to elastisearch and STDOUT: 
 
 ```bash
 cd /opt/logstash
 bin/logstash -f conf/logstash-apache.conf
 ```
+
+SysLog to ElasticSearch and STDOUT
+----------------------------------
 
 Output syslog from port 5000 to elasticsearch and STDOUT:
 
@@ -61,23 +68,8 @@ telnet localhost 5000
 
 To see the dashboard with data from elasticsearch using Kibana open [http://127.0.0.1:8080/kibana](http://127.0.0.1:8080/kibana).
 
-Output STDIN to Nagios and STDOUT:
-
-```bash
-cd /opt/logstash
-bin/logstash -f conf/logstash-nagios.conf
-curl 'http://localhost:9200/_search?pretty'
-```
-
-Output STDIN to STDOUT:
-
-```bash
-cd /opt/logstash
-bin/logstash -f conf/logstash-log4j.conf
-```
-
-NSCA
-----
+STDIN to NSCA and STDOUT
+------------------------
 
 To try NSCA:
 
@@ -86,14 +78,26 @@ cd /opt/nsca
 sudo ./bin/send_nsca ${NAGIOS_HOST} -c config/send_nsca.cfg < messages/ok
 ```
 
+Output STDIN to NSCA and STDOUT:
+
+```bash
+cd /opt/logstash
+bin/logstash -f conf/logstash-log4j.conf
+```
+
+Add entries to /tmp/log4j.log or paste them to STDIN.
+
+To see the results in Nagios XI, open [http://localhost/nagiosxi/](http://localhost/nagiosxi/).
+
+To see the results in ElasticSearch, run following.
+
+```bash
+curl 'http://localhost:9200/_search?pretty'
+```
+
+To see the dashboard with data from elasticsearch using Kibana open [http://127.0.0.1:8080/kibana](http://127.0.0.1:8080/kibana).
+
 More info:
 
 * [Using-and-Configuring-NSCA-With-Nagios-XI.pdf](http://assets.nagios.com/downloads/nagiosxi/docs/Using-and-Configuring-NSCA-With-Nagios-XI.pdf)
 * [NSCA_Setup.pdf](http://nagios.sourceforge.net/download/contrib/documentation/misc/NSCA_Setup.pdf)
-
-TODO
-----
-
-* Log4J
-** Add output to ElasticSearch
-** Add input from File
