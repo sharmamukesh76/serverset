@@ -1,0 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "yungsang/coreos"
+  config.vm.provider "virtualbox" do |v|
+    v.name = "coreos"
+    v.memory = 1024
+  end
+end
