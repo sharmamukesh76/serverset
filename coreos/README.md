@@ -42,6 +42,8 @@ etcdctl set /foo-service/container2 localhost:2222
 **systemd**
 
 ```bash
+etcd &
+
 sudo echo "[Unit]
 Description=BDDAssistant
 After=docker.service
@@ -51,14 +53,16 @@ Requires=docker.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill bdd-assistant
 ExecStartPre=-/usr/bin/docker rm bdd-assistant
-ExecStartPre=/usr/bin/docker pull vfarcic/technologyconversationsbdd
 ExecStart=/usr/bin/docker run --name bdd-assistant -p 9000:9000 vfarcic/technologyconversationsbdd
-ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%H:%i running
-ExecStop=/usr/bin/docker stop bdd-assistant
-ExecStopPost=/usr/bin/etcdctl rm /bdd-assistant/%H:%i
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/status running
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/url %H:%i
+#ExecStop=/usr/bin/docker stop bdd-assistant
+#ExecStopPost=/usr/bin/etcdctl rm /bdd-assistant/status
+#ExecStopPost=/usr/bin/etcdctl rm /bdd-assistant/url
 
 [Install]
 WantedBy=multi-user.target" >/etc/systemd/system/bdd-assistant:9000.service
+
 sudo systemctl enable /etc/systemd/system/bdd-assistant:9000.service
 sudo systemctl start bdd-assistant:9000.service
 systemctl status bdd-assistant:9000.service
