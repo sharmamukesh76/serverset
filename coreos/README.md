@@ -22,8 +22,8 @@ Cluster
 
 **TODO**
 
-etcd
-----
+etcd (TODO Remove)
+------------------
 
 ```bash
 etcd &
@@ -58,34 +58,47 @@ Requires=docker.service
 
 [Service]
 TimeoutStartSec=0
-ExecStartPre=/usr/bin/docker kill bdd_assistant_$COLOR
-#ExecStartPre=-/usr/bin/docker rm bdd-assistant
+ExecStartPre=-/usr/bin/docker stop %P
+ExecStartPre=-/usr/bin/docker rm %P
 
-#ExecStartPre=-/usr/bin/docker pull vfarcic/technologyconversationsbdd
-#ExecStart=/usr/bin/docker run --name %P -p %i:9000 vfarcic/technologyconversationsbdd
-#ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/instance %P
-#ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/url %H:%i
+ExecStartPre=-/usr/bin/docker pull vfarcic/technologyconversationsbdd
+ExecStart=/usr/bin/docker run --name %P -p %i:9000 vfarcic/technologyconversationsbdd
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/instance %P
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/url %H:%i
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/url %H:%i
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/status running
 
-#ExecStop=/usr/bin/docker stop bdd-assistant
-#ExecStopPost=/usr/bin/etcdctl rm /bdd-assistant/status
-#ExecStopPost=/usr/bin/etcdctl rm /bdd-assistant/url
+ExecStop=-/usr/bin/docker stop %P
+ExecStopPost=/usr/bin/etcdctl set /bdd-assistant/%P/status stopped
 
 [Install]
 WantedBy=multi-user.target" >bdd_assistant.service
 
-sudo cp bdd_assistant.service /etc/systemd/system/bdd_assistant.service
 sudo cp bdd_assistant.service /etc/systemd/system/bdd_assistant_blue@9001.service
 sudo cp bdd_assistant.service /etc/systemd/system/bdd_assistant_green@9002.service
 sudo rm -f bdd_assistant.service
-sudo systemctl enable /etc/systemd/system/bdd_assistant.service
 sudo systemctl enable /etc/systemd/system/bdd_assistant_blue@9001.service
 sudo systemctl enable /etc/systemd/system/bdd_assistant_green@9002.service
-sudo systemctl start bdd_assistant.service
-sudo systemctl start bdd_assistant_blue@9001.service
-wget http://localhost:9001
-sudo systemctl start bdd_assistant_green@9002.service
-wget http://localhost:9002
-systemctl status bdd_assistant_blue@9001.service
+sudo systemctl daemon-reload
+```
+
+Runner
+------
+
+```bash
+sudo mkdir -p /opt/deploy
+echo 'if [[ "$(etcdctl get /bdd-assistant/instance)" = "bdd_assistant_blue" ]]; then
+    sudo systemctl start bdd_assistant_green@9002.service
+    sudo systemctl stop bdd_assistant_blue@9001.service
+else
+    sudo systemctl start bdd_assistant_blue@9001.service
+    sudo systemctl stop bdd_assistant_green@9002.service
+fi' >deploy_bdd_assistant.sh
+sudo chmod 744 deploy_bdd_assistant.sh
+sudo mv deploy_bdd_assistant.sh /opt/deploy/.
+/opt/deploy/deploy_bdd_assistant.sh
+docker ps -a
+etcdctl get /bdd-assistant/instance
 ```
 
 TODO
