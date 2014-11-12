@@ -9,48 +9,47 @@ vagrant up
 vagrant ssh
 ```
 
-Docker
-------
+Cluster (TODO)
+--------------
 
-```bash
-docker run -d -p 9001:9000 --name bdd-assistant vfarcic/technologyconversationsbdd
-wget http://localhost:9001
-```
-
-Cluster
--------
-
-**TODO**
-
-etcd (TODO Remove)
-------------------
+etcd
+----
 
 ```bash
 etcd &
-etcdctl set /message Hello
-# curl -L -X PUT http://127.0.0.1:4001/v2/keys/message -d value="Hello"
-etcdctl get /message
-# curl -L http://127.0.0.1:4001/v2/keys/message
-etcdctl rm /message
-# curl -L -X DELETE http://127.0.0.1:4001/v2/keys/message
-ip address show | grep docker
-etcdctl mkdir /foo-service
-etcdctl set /foo-service/container1 localhost:1111
-# curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container1 -d value="localhost:1111"
-etcdctl ls /foo-service
-# curl -L http://127.0.0.1:4001/v2/keys/foo-service
-etcdctl watch /foo-service --recursive
-# curl -L http://127.0.0.1:4001/v2/keys/foo-service?wait=true\&recursive=true
-etcdctl set /foo-service/container2 localhost:2222
-# curl -L -X PUT http://127.0.0.1:4001/v2/keys/foo-service/container2 -d value="localhost:2222"
 ```
 
-systemd
--------
+nginx
+-----
 
 ```bash
-etcd &
+sudo echo "[Unit]
+Description=nginx
+After=docker.service
+Requires=docker.service
 
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop nginx
+ExecStartPre=-/usr/bin/docker rm nginx
+
+ExecStartPre=-/usr/bin/docker pull dockerfile/nginx
+ExecStart=/usr/bin/docker run --name nginx -p 80:80 -v /etc/nginx/sites-enabled:/etc/nginx/sites-enabled -v /etc/nginx/certs-enabled:/etc/nginx/certs-enabled -v /var/log/nginx:/var/log/nginx dockerfile/nginx
+
+ExecStop=-/usr/bin/docker stop nginx
+
+[Install]
+WantedBy=multi-user.target" >nginx.service
+
+sudo mv nginx.service /etc/systemd/system/nginx.service
+sudo systemctl enable /etc/systemd/system/nginx.service
+sudo systemctl start nginx.service
+```
+
+BDD Assistant
+-------------
+
+```bash
 sudo echo "[Unit]
 Description=BDDAssistant
 After=docker.service
@@ -104,5 +103,5 @@ etcdctl get /bdd-assistant/instance
 TODO
 ----
 
+* nginx
 * confd
-* nginx or lighttpd
