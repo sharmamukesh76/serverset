@@ -12,6 +12,24 @@ vagrant ssh
 Cluster (TODO)
 --------------
 
+confd
+-----
+
+```bash
+wget -O confd https://github.com/kelseyhightower/confd/releases/download/v0.6.3/confd-0.6.3-linux-amd64
+sudo mv confd /opt/bin/.
+sudo chmod +x /opt/bin/confd
+sudo mkdir -p /etc/confd/{conf.d,templates}
+
+[template]
+src = "myconfig.conf.tmpl"
+dest = "/tmp/myconfig.conf"
+keys = [
+    "/myapp/database/url",
+    "/myapp/database/user",
+]
+```
+
 etcd
 ----
 
@@ -23,8 +41,7 @@ nginx
 -----
 
 ```bash
-sudo mkdir -p /etc/nginx/sites-enabled
-sudo mkdir -p /etc/nginx/certs-enabled
+sudo mkdir -p /etc/nginx/{sites-enabled,certs-enabled}
 sudo mkdir -p /var/log/nginx
 echo "server {
   listen 80 default_server;
@@ -78,6 +95,7 @@ ExecStart=/usr/bin/docker run --name %P -p %i:9000 vfarcic/technologyconversatio
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/instance %P
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/url %H:%i
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/url %H:%i
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/port %i
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/status running
 
 ExecStop=-/usr/bin/docker stop %P
@@ -98,7 +116,7 @@ Runner
 ------
 
 ```bash
-sudo mkdir -p /opt/deploy
+etcdctl set /bdd-assistant/instance none
 echo 'if [[ "$(etcdctl get /bdd-assistant/instance)" = "bdd_assistant_blue" ]]; then
     sudo systemctl start bdd_assistant_green@9002.service
     sudo systemctl stop bdd_assistant_blue@9001.service
@@ -107,8 +125,8 @@ else
     sudo systemctl stop bdd_assistant_green@9002.service
 fi' >deploy_bdd_assistant.sh
 sudo chmod 744 deploy_bdd_assistant.sh
-sudo mv deploy_bdd_assistant.sh /opt/deploy/.
-/opt/deploy/deploy_bdd_assistant.sh
+sudo mv deploy_bdd_assistant.sh /opt/bin/.
+deploy_bdd_assistant.sh
 docker ps -a
 etcdctl get /bdd-assistant/instance
 ```
