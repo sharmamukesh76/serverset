@@ -23,7 +23,20 @@ nginx
 -----
 
 ```bash
-sudo echo "[Unit]
+sudo mkdir -p /etc/nginx/sites-enabled
+sudo mkdir -p /etc/nginx/certs-enabled
+sudo mkdir -p /var/log/nginx
+echo "server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+  server_name _;
+  location / {
+    proxy_pass http://172.17.42.1:9001/;
+  }
+}" >bdd_assistant
+sudo mv bdd_assistant /etc/nginx/sites-enabled/bdd_assistant
+
+echo "[Unit]
 Description=nginx
 After=docker.service
 Requires=docker.service
@@ -40,8 +53,8 @@ ExecStop=-/usr/bin/docker stop nginx
 
 [Install]
 WantedBy=multi-user.target" >nginx.service
-
 sudo mv nginx.service /etc/systemd/system/nginx.service
+
 sudo systemctl enable /etc/systemd/system/nginx.service
 sudo systemctl start nginx.service
 ```
