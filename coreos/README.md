@@ -21,13 +21,23 @@ sudo mv confd /opt/bin/.
 sudo chmod +x /opt/bin/confd
 sudo mkdir -p /etc/confd/{conf.d,templates}
 
-[template]
-src = "myconfig.conf.tmpl"
-dest = "/tmp/myconfig.conf"
+echo '[template]
+src = "bdd_assistant.conf.tmpl"
+dest = "/etc/nginx/sites-enabled/bdd_assistant.conf"
 keys = [
-    "/myapp/database/url",
-    "/myapp/database/user",
-]
+    "/bdd-assistant/port"
+]' >bdd_assistant.toml
+sudo mv bdd_assistant.toml /etc/confd/conf.d/.
+
+echo 'server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+  server_name _;
+  location / {
+    proxy_pass http://172.17.42.1:{{getv "/bdd-assistant/port"}}/;
+  }
+}' >bdd_assistant.conf.tmpl
+sudo mv bdd_assistant.conf.tmpl /etc/confd/templates/.
 ```
 
 etcd
@@ -43,15 +53,6 @@ nginx
 ```bash
 sudo mkdir -p /etc/nginx/{sites-enabled,certs-enabled}
 sudo mkdir -p /var/log/nginx
-echo "server {
-  listen 80 default_server;
-  listen [::]:80 default_server;
-  server_name _;
-  location / {
-    proxy_pass http://172.17.42.1:9001/;
-  }
-}" >bdd_assistant
-sudo mv bdd_assistant /etc/nginx/sites-enabled/bdd_assistant
 
 echo "[Unit]
 Description=nginx
@@ -80,7 +81,7 @@ BDD Assistant
 -------------
 
 ```bash
-sudo echo "[Unit]
+echo '[Unit]
 Description=BDDAssistant
 After=docker.service
 Requires=docker.service
@@ -94,6 +95,7 @@ ExecStartPre=-/usr/bin/docker pull vfarcic/technologyconversationsbdd
 ExecStart=/usr/bin/docker run --name %P -p %i:9000 vfarcic/technologyconversationsbdd
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/instance %P
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/url %H:%i
+ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/port %i
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/url %H:%i
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/port %i
 ExecStartPost=/usr/bin/etcdctl set /bdd-assistant/%P/status running
@@ -102,7 +104,7 @@ ExecStop=-/usr/bin/docker stop %P
 ExecStopPost=/usr/bin/etcdctl set /bdd-assistant/%P/status stopped
 
 [Install]
-WantedBy=multi-user.target" >bdd_assistant.service
+WantedBy=multi-user.target' >bdd_assistant.service
 
 sudo cp bdd_assistant.service /etc/systemd/system/bdd_assistant_blue@9001.service
 sudo cp bdd_assistant.service /etc/systemd/system/bdd_assistant_green@9002.service
@@ -123,16 +125,17 @@ echo 'if [[ "$(etcdctl get /bdd-assistant/instance)" = "bdd_assistant_blue" ]]; 
 else
     sudo systemctl start bdd_assistant_blue@9001.service
     sudo systemctl stop bdd_assistant_green@9002.service
-fi' >deploy_bdd_assistant.sh
+fi
+confd -onetime -backend etcd -node 127.0.0.1:4001
+docker kill -s HUP nginx' >deploy_bdd_assistant.sh
 sudo chmod 744 deploy_bdd_assistant.sh
 sudo mv deploy_bdd_assistant.sh /opt/bin/.
-deploy_bdd_assistant.sh
-docker ps -a
-etcdctl get /bdd-assistant/instance
 ```
 
-TODO
+Test
 ----
 
-* nginx
-* confd
+sudo deploy_bdd_assistant.sh
+docker ps
+cat /etc/nginx/sites-enabled/bdd_assistant.conf
+wget localhost; cat index.html; rm index.html
