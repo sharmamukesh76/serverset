@@ -26,7 +26,8 @@ src = "bdd_assistant.conf.tmpl"
 dest = "/etc/nginx/sites-enabled/bdd_assistant.conf"
 keys = [
     "/bdd-assistant/port"
-]' >bdd_assistant.toml
+]
+reload_cmd = "/usr/bin/docker kill -s HUP nginx"' >bdd_assistant.toml
 sudo mv bdd_assistant.toml /etc/confd/conf.d/.
 
 echo 'server {
@@ -121,13 +122,15 @@ Runner
 etcdctl set /bdd-assistant/instance none
 echo 'if [[ "$(etcdctl get /bdd-assistant/instance)" = "bdd_assistant_blue" ]]; then
     sudo systemctl start bdd_assistant_green@9002.service
+    confd -onetime -backend etcd -node 127.0.0.1:4001
+    sleep 10
     sudo systemctl stop bdd_assistant_blue@9001.service
 else
     sudo systemctl start bdd_assistant_blue@9001.service
+    confd -onetime -backend etcd -node 127.0.0.1:4001
+    sleep 10
     sudo systemctl stop bdd_assistant_green@9002.service
-fi
-confd -onetime -backend etcd -node 127.0.0.1:4001
-docker kill -s HUP nginx' >deploy_bdd_assistant.sh
+fi' >deploy_bdd_assistant.sh
 sudo chmod 744 deploy_bdd_assistant.sh
 sudo mv deploy_bdd_assistant.sh /opt/bin/.
 ```
@@ -136,6 +139,6 @@ Test
 ----
 
 sudo deploy_bdd_assistant.sh
+wget localhost; cat index.html; rm index.html
 docker ps
 cat /etc/nginx/sites-enabled/bdd_assistant.conf
-wget localhost; cat index.html; rm index.html
